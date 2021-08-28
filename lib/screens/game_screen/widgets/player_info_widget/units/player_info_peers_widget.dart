@@ -3,16 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../../models/opendota/player_peer_entity.dart';
 
 class PlayerInfoPeersWidget extends StatelessWidget {
-  late List<PlayerPeer> _peers = [];
+  final List<PlayerPeer>? peers;
 
-  PlayerInfoPeersWidget({Key? key, List<PlayerPeer>? peers}) : super(key: key) {
-    if (peers != null) {
-      _peers = peers;
-    }
-  }
+  const PlayerInfoPeersWidget({Key? key, required this.peers}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<PlayerPeer> _peers = peers ?? [];
+
     if (_peers.isEmpty) return Container();
 
     final int peersCount = _peers.length;
@@ -25,7 +23,7 @@ class PlayerInfoPeersWidget extends StatelessWidget {
               child: Text('Статистика с другими игроками:',
                   style: TextStyle(fontWeight: FontWeight.w600)))),
       SizedBox(
-          height: 300,
+          height: 125,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               itemBuilder: (context, i) {
@@ -34,7 +32,6 @@ class PlayerInfoPeersWidget extends StatelessWidget {
 
                 return SizedBox(
                     height: 25,
-                    width: double.infinity,
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

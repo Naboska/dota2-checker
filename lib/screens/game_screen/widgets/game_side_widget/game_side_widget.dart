@@ -18,21 +18,26 @@ class GameSideWidget extends StatelessWidget {
           alignment: Alignment.centerLeft,
           child: Padding(
               padding: const EdgeInsets.only(bottom: 10.0, top: 10.0),
-              child: Text(side, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, color: sideColor)))),
-      SizedBox(
-          width: double.infinity,
-          height: 500,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemBuilder: (context, i) {
-                final int currentId = players![i];
+              child: Text(side,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 20,
+                      color: sideColor)))),
+      Align(
+          alignment: Alignment.centerLeft,
+          child: SizedBox(
+              height: 500,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, i) {
+                    final int currentId = players![i];
 
-                return Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: PlayerInfoWidget(playerId: currentId));
-              },
-              itemCount: players?.length ?? 0))
+                    return Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: PlayerInfoWidget(playerId: currentId));
+                  },
+                  itemCount: players?.length ?? 0)))
     ]);
   }
 }

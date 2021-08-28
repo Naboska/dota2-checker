@@ -4,7 +4,7 @@ class PlayerInfo {
   int? rankTier;
   int? soloCompetitiveRank;
   int? competitiveRank;
-  Profile? profile;
+  PlayerInfoProfile? profile;
 
   PlayerInfo(
       {required this.trackedUntil,
@@ -20,7 +20,7 @@ class PlayerInfo {
     soloCompetitiveRank = json['solo_competitive_rank'];
     competitiveRank = json['competitive_rank'];
     mmrEstimate = MmrEstimate.fromJson(json['mmr_estimate']);
-    if (json['profile'] != null) profile = Profile.fromJson(json['profile']);
+    if (json['profile'] != null) profile = PlayerInfoProfile.fromJson(json['profile']);
   }
 }
 
@@ -40,7 +40,7 @@ class MmrEstimate {
   }
 }
 
-class Profile {
+class PlayerInfoProfile {
   late int accountId;
   late String personaname;
   late int cheese;
@@ -53,7 +53,7 @@ class Profile {
   late String? loccountrycode;
   late bool isContributor;
 
-  Profile(
+  PlayerInfoProfile(
       {required this.accountId,
         required this.personaname,
         required this.cheese,
@@ -66,7 +66,7 @@ class Profile {
         required this.loccountrycode,
         required this.isContributor});
 
-  Profile.fromJson(Map<String, dynamic> json) {
+  PlayerInfoProfile.fromJson(Map<String, dynamic> json) {
     accountId = json['account_id'];
     personaname = json['personaname'];
     cheese = json['cheese'];
