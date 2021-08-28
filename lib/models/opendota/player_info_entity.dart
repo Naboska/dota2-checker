@@ -22,17 +22,6 @@ class PlayerInfo {
     mmrEstimate = MmrEstimate.fromJson(json['mmr_estimate']);
     if (json['profile'] != null) profile = Profile.fromJson(json['profile']);
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['tracked_until'] = trackedUntil;
-    data['rank_tier'] = rankTier;
-    data['solo_competitive_rank'] = soloCompetitiveRank;
-    data['competitive_rank'] = competitiveRank;
-    data['mmr_estimate'] = mmrEstimate.toJson();
-    if (profile != null) data['profile'] = profile!.toJson();
-    return data;
-  }
 }
 
 class MmrEstimate {
@@ -89,21 +78,5 @@ class Profile {
     lastLogin = json['last_login'];
     loccountrycode = json['loccountrycode'];
     isContributor = json['is_contributor'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['account_id'] = accountId;
-    data['personaname'] = personaname;
-    data['cheese'] = cheese;
-    data['steamid'] = steamid;
-    data['avatar'] = avatar;
-    data['avatarmedium'] = avatarmedium;
-    data['avatarfull'] = avatarfull;
-    data['profileurl'] = profileurl;
-    data['last_login'] = lastLogin;
-    data['loccountrycode'] = loccountrycode;
-    data['is_contributor'] = isContributor;
-    return data;
   }
 }

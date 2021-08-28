@@ -7,7 +7,7 @@ class LastGame {
   List<int>? dire;
   int? lobby;
 
-  LastGame({required String serverConfig}) {
+  LastGame.fromServerConfig({required String serverConfig}) {
     final List<String> textList = serverConfig.split('\r\n');
     late String? last;
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'player_info_widget.dart';
+import '../player_info_widget/player_info_widget.dart';
 
 class GameSideWidget extends StatelessWidget {
   final String side;
@@ -21,7 +21,7 @@ class GameSideWidget extends StatelessWidget {
               child: Text(side, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 20, color: sideColor)))),
       SizedBox(
           width: double.infinity,
-          height: 200,
+          height: 500,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
