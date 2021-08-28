@@ -9,7 +9,7 @@ import 'models/last_game.dart';
 import 'widgets/game_side_widget/game_side_widget.dart';
 
 class GameScreen extends StatefulWidget {
-  final _dotaDirectory = DotaDirectory();
+  final dotaDirectory = DotaDirectory();
 
   GameScreen({Key? key}) : super(key: key);
 
@@ -23,7 +23,7 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<void> _read() async {
     try {
-      String? dotaDir = await widget._dotaDirectory.getDotaDirectory();
+      String? dotaDir = await widget.dotaDirectory.getDotaDirectory();
       File file = File('$dotaDir/game/dota/server_log.txt');
       String serverConfig = await file.readAsString();
       LastGame newGame = LastGame.fromServerConfig(serverConfig: serverConfig);

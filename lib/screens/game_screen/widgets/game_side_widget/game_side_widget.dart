@@ -26,7 +26,7 @@ class GameSideWidget extends StatelessWidget {
       Align(
           alignment: Alignment.centerLeft,
           child: SizedBox(
-              height: 500,
+              height: 400,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,

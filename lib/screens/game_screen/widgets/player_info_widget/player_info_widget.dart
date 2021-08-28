@@ -1,11 +1,11 @@
-import 'package:dota2checker/models/opendota/player_recent_match.dart';
-import 'package:dota2checker/screens/game_screen/widgets/player_info_widget/units/player_info_matches_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dota2checker/models/opendota/player_peer_entity.dart';
 import 'package:dota2checker/models/opendota/player_info_entity.dart';
+import 'package:dota2checker/models/opendota/player_recent_match.dart';
 import 'package:dota2checker/services/opendota/player_info_service.dart';
 
+import 'units/player_info_matches_widget.dart';
 import 'units/player_info_peers_widget.dart';
 import 'units/player_info_profile_widget.dart';
 
