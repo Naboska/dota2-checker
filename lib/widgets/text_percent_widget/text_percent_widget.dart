@@ -7,9 +7,13 @@ class TextPercentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isEmpty = percent.isNaN;
+
+    if (isEmpty) return Container();
+
     return Text('${percent.toStringAsFixed(2)}%',
         style: TextStyle(
             color:
-                HSLColor.fromAHSL(1, percent.toDouble(), 1.0, 0.4).toColor()));
+                HSLColor.fromAHSL(1, percent, 1.0, 0.4).toColor()));
   }
 }

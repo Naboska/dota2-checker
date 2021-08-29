@@ -14,6 +14,6 @@ class PlayerStatistic {
   }
 
   _percentCalc() {
-    percent = (win / (win + lose)) * 100;
+      percent = (win / (win + lose)) * 100;
   }
 }
