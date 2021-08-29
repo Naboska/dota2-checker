@@ -1,11 +1,12 @@
-import 'package:dota2checker/widgets/text_percent_widget/text_percent_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:dota2checker/models/opendota/player_peer_entity.dart';
 import 'package:dota2checker/models/opendota/player_info_entity.dart';
 import 'package:dota2checker/models/opendota/player_recent_match.dart';
 import 'package:dota2checker/services/opendota/player_info_service.dart';
 import 'package:dota2checker/models/opendota/player_statistic.dart';
+import 'package:dota2checker/utils/safe_cb.dart';
 
 import 'units/player_info_matches_widget.dart';
 import 'units/player_info_peers_widget.dart';
@@ -28,6 +29,13 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
   late List<PlayerRecentMatch>? _recentMatches;
   bool _isLoadingInfo = true;
   bool _isLoadingError = false;
+
+  @override
+  void initState() {
+    _getPlayerInfo();
+
+    super.initState();
+  }
 
   Future<void> _getPlayerInfo() async {
     try {
@@ -66,13 +74,6 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
   }
 
   @override
-  void initState() {
-    _getPlayerInfo();
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     if (_isLoadingInfo) {
       return const SizedBox(
@@ -81,27 +82,37 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
           child: Card(child: Center(child: CircularProgressIndicator())));
     }
 
-    if (_isLoadingError) return Text('(error ${widget.playerId})');
+    if (_isLoadingError) {
+      return SizedBox(
+        width: 240,
+        height: 700,
+        child: Card(child: Center(child: Text('(error ${widget.playerId})'))));
+    }
 
     return SizedBox(
       width: 270,
       child: Card(
-          child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: _playerInfo!.profile != null
-                  ? Column(
-                      children: [
-                        PlayerInfoProfileWidget(
-                            rank: _playerInfo?.rankTier,
-                            profile: _playerInfo!.profile!,
-                            statistic: _playerStatistic!),
-                        PlayerInfoMatchesWidget(matches: _recentMatches),
-                        PlayerInfoPeersWidget(peers: _playerPeers)
-                      ],
-                    )
-                  : const Center(
-                      child: Text('Пользователь скрыл профиль'),
-                    ))),
+          child: InkWell(
+              enableFeedback: false,
+              onTap: safeCb(_playerInfo?.profile, () {
+                Get.toNamed("/player/${widget.playerId}");
+              }),
+              child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: _playerInfo!.profile != null
+                      ? Column(
+                          children: [
+                            PlayerInfoProfileWidget(
+                                rank: _playerInfo?.rankTier,
+                                profile: _playerInfo!.profile!,
+                                statistic: _playerStatistic!),
+                            PlayerInfoMatchesWidget(matches: _recentMatches),
+                            PlayerInfoPeersWidget(peers: _playerPeers)
+                          ],
+                        )
+                      : const Center(
+                          child: Text('Пользователь скрыл профиль'),
+                        )))),
     );
   }
 }
