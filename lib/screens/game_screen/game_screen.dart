@@ -22,16 +22,14 @@ class _GameScreenState extends State<GameScreen> {
   LastGame? lastGame;
 
   Future<void> _read() async {
-    try {
-      String? dotaDir = await widget.dotaDirectory.getDotaDirectory();
-      File file = File('$dotaDir/game/dota/server_log.txt');
-      String serverConfig = await file.readAsString();
-      LastGame newGame = LastGame.fromServerConfig(serverConfig: serverConfig);
+    String? dotaDir = await widget.dotaDirectory.getDotaDirectory();
+    File file = File('$dotaDir/game/dota/server_log.txt');
+    String serverConfig = await file.readAsString();
+    LastGame newGame = LastGame.fromServerConfig(serverConfig: serverConfig);
 
-      if (newGame.lobby != lastGame?.lobby) {
-        setState(() => lastGame = newGame);
-      }
-    } catch (_) {}
+    if (newGame.lobby != lastGame?.lobby) {
+      setState(() => lastGame = newGame);
+    }
   }
 
   @override
@@ -53,6 +51,11 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isRadiantNotEmpty =
+        lastGame?.radiant != null && lastGame!.radiant.isNotEmpty;
+    final bool isDireNotEmpty =
+        lastGame?.dire != null && lastGame!.dire.isNotEmpty;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Dota 2 Checker'),
@@ -70,14 +73,18 @@ class _GameScreenState extends State<GameScreen> {
                                 fontWeight: FontWeight.w900, fontSize: 15)),
                         Text(' ${lastGame?.lobby ?? 'не найдено'}')
                       ])),
-                  GameSideWidget(
-                      side: 'The Radiant',
-                      sideColor: radiantColor,
-                      players: lastGame?.radiant),
-                  GameSideWidget(
-                      side: 'The Dire',
-                      sideColor: direColor,
-                      players: lastGame?.dire),
+                  isRadiantNotEmpty
+                      ? GameSideWidget(
+                          side: 'The Radiant',
+                          sideColor: radiantColor,
+                          players: lastGame?.radiant)
+                      : Container(),
+                  isDireNotEmpty
+                      ? GameSideWidget(
+                          side: 'The Dire',
+                          sideColor: direColor,
+                          players: lastGame?.dire)
+                      : Container(),
                 ]))));
   }
 }

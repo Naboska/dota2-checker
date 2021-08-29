@@ -1,11 +1,15 @@
-const findGames = 'DOTA_GAMEMODE_TURBO';
+import 'dart:math';
+
+import 'package:dota2checker/utils/numeric_safe_parser.dart';
+
+const findGames = ['DOTA_GAMEMODE_TURBO', 'DOTA_GAMEMODE_1V1MID'];
 const minPlayerIndex = 7;
 const maxPlayerIndex = 16;
 
 class LastGame {
-  List<int>? radiant;
-  List<int>? dire;
-  int? lobby;
+  List<int> radiant = [];
+  List<int> dire = [];
+  String? lobby;
 
   LastGame.fromServerConfig({required String serverConfig}) {
     final List<String> textList = serverConfig.split('\r\n');
@@ -13,34 +17,51 @@ class LastGame {
 
     for (int i = textList.length - 1; i != 0; i--) {
       final String current = textList[i];
+      final bool isCurrentCorrectGame =
+          findGames.any((game) => current.contains(game));
 
-      if (current.contains(findGames)) {
-        last = current;
+      if (isCurrentCorrectGame) {
+        final int pos = current.lastIndexOf('Party');
+        last = pos != -1 ? current.substring(0, pos) : current;
         break;
       }
     }
 
     if (last != null) {
       final List<String> gameInfo = last.split(' ');
+      final int correctRange = min(gameInfo.length - 1, maxPlayerIndex);
+
       List<int> newRadiant = [];
       List<int> newDire = [];
 
-      for (int i = minPlayerIndex; i <= maxPlayerIndex; i++) {
-        List<int> currentList = newRadiant.length < 5 ? newRadiant : newDire;
-        currentList.add(_parsePlayer(player: gameInfo[i]));
+      for (int i = minPlayerIndex; i <= correctRange; i++) {
+        final String? player = gameInfo[i];
+        final num? playerSlot = numericSafeParser(player?[0]);
+
+        if (playerSlot != null) {
+          List<int> currentList = playerSlot <= 4 ? newRadiant : newDire;
+          int? parsePlayer = _parsePlayer(player: player!);
+          if (parsePlayer != null) currentList.add(parsePlayer);
+        }
       }
 
       radiant = newRadiant;
       dire = newDire;
 
-      lobby = int.parse(gameInfo[5]);
+      lobby = gameInfo[5];
     }
   }
 
-  int _parsePlayer({required String player}) {
-    RegExp intRgx = RegExp(r"[^0-9]+");
-    String processed = player.substring(7).replaceAll(intRgx, '');
+  int? _parsePlayer({required String player}) {
+    bool isCorrect = player.contains('U:1:');
 
-    return int.parse(processed);
+    if (isCorrect) {
+      RegExp intRgx = RegExp(r"[^0-9]+");
+      String processed = player.substring(7).replaceAll(intRgx, '');
+
+      return int.parse(processed);
+    }
+
+    return null;
   }
 }
