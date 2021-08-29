@@ -27,7 +27,7 @@ class _GameScreenState extends State<GameScreen> {
     String serverConfig = await file.readAsString();
     LastGame newGame = LastGame.fromServerConfig(serverConfig: serverConfig);
 
-    if (newGame.lobby != lastGame?.lobby) {
+    if (newGame.gameTime != lastGame?.gameTime) {
       setState(() => lastGame = newGame);
     }
   }
@@ -71,7 +71,10 @@ class _GameScreenState extends State<GameScreen> {
                         const Text('Лобби:',
                             style: TextStyle(
                                 fontWeight: FontWeight.w900, fontSize: 15)),
-                        Text(' ${lastGame?.lobby ?? 'не найдено'}')
+                        Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: Text(' ${lastGame?.lobby ?? 'не найдено'}')),
+                        Text(lastGame?.gameTime != null ? '(${lastGame!.gameTime})' : '')
                       ])),
                   isRadiantNotEmpty
                       ? GameSideWidget(

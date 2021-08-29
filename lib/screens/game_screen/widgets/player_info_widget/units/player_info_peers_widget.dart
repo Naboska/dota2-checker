@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../models/opendota/player_peer_entity.dart';
+import 'package:dota2checker/models/opendota/player_peer_entity.dart';
+import 'package:dota2checker/widgets/text_percent_widget/text_percent_widget.dart';
 
 class PlayerInfoPeersWidget extends StatelessWidget {
   final List<PlayerPeer>? peers;
@@ -28,7 +29,7 @@ class PlayerInfoPeersWidget extends StatelessWidget {
               scrollDirection: Axis.vertical,
               itemBuilder: (context, i) {
                 final PlayerPeer peer = _peers[i];
-                final int percentWin = (peer.win / peer.games * 100).toInt();
+                final double percentWin = (peer.win / peer.games * 100);
 
                 return SizedBox(
                     height: 25,
@@ -44,7 +45,7 @@ class PlayerInfoPeersWidget extends StatelessWidget {
                                     NetworkImage(peer.avatarfull))),
                             Text(peer.personaname)
                           ]),
-                          Text('$percentWin%', style: TextStyle(color: HSLColor.fromAHSL(1, percentWin.toDouble(), 1.0, 0.4).toColor()))
+                          TextPercentWidget(percent: percentWin),
                         ]));
               },
               itemCount: peersCount != 0 && peersCount > 5 ? 5 : peersCount))

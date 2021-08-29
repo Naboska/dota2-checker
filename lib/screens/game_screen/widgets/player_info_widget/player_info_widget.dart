@@ -1,9 +1,11 @@
+import 'package:dota2checker/widgets/text_percent_widget/text_percent_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dota2checker/models/opendota/player_peer_entity.dart';
 import 'package:dota2checker/models/opendota/player_info_entity.dart';
 import 'package:dota2checker/models/opendota/player_recent_match.dart';
 import 'package:dota2checker/services/opendota/player_info_service.dart';
+import 'package:dota2checker/models/opendota/player_statistic.dart';
 
 import 'units/player_info_matches_widget.dart';
 import 'units/player_info_peers_widget.dart';
@@ -21,6 +23,7 @@ class PlayerInfoWidget extends StatefulWidget {
 
 class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
   late PlayerInfo? _playerInfo;
+  late PlayerStatistic? _playerStatistic;
   late List<PlayerPeer>? _playerPeers;
   late List<PlayerRecentMatch>? _recentMatches;
   bool _isLoadingInfo = true;
@@ -39,6 +42,8 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
           await widget.playerInfoService.getPlayerPeers(id: widget.playerId);
       final List<PlayerRecentMatch> recentMatches =
           await widget.playerInfoService.getRecentMatches(id: widget.playerId);
+      final PlayerStatistic playerStatistic =
+          await widget.playerInfoService.getGameStatistic(id: widget.playerId);
 
       if (!mounted) return;
 
@@ -46,6 +51,7 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
         _playerInfo = playerInfo;
         _playerPeers = playerPeers;
         _recentMatches = recentMatches;
+        _playerStatistic = playerStatistic;
         _isLoadingInfo = false;
       });
     } catch (e) {
@@ -85,7 +91,10 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
               child: _playerInfo!.profile != null
                   ? Column(
                       children: [
-                        PlayerInfoProfileWidget(profile: _playerInfo!.profile!),
+                        PlayerInfoProfileWidget(
+                            rank: _playerInfo?.rankTier,
+                            profile: _playerInfo!.profile!,
+                            statistic: _playerStatistic!),
                         PlayerInfoMatchesWidget(matches: _recentMatches),
                         PlayerInfoPeersWidget(peers: _playerPeers)
                       ],
