@@ -6,8 +6,10 @@ import 'package:dota2checker/models/opendota/player_info_entity.dart';
 import 'package:dota2checker/models/opendota/player_recent_match.dart';
 import 'package:dota2checker/services/opendota/player_info_service.dart';
 import 'package:dota2checker/models/opendota/player_statistic.dart';
+import 'package:dota2checker/models/opendota/player_heroes.dart';
 import 'package:dota2checker/utils/safe_cb.dart';
 
+import 'units/player_info_heroes_widget.dart';
 import 'units/player_info_matches_widget.dart';
 import 'units/player_info_peers_widget.dart';
 import 'units/player_info_profile_widget.dart';
@@ -26,6 +28,7 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
   late PlayerInfo? _playerInfo;
   late PlayerStatistic? _playerStatistic;
   late List<PlayerPeer>? _playerPeers;
+  late List<PlayerHeroes>? _playerHeroes;
   late List<PlayerRecentMatch>? _recentMatches;
   bool _isLoadingInfo = true;
   bool _isLoadingError = false;
@@ -44,14 +47,13 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
         _isLoadingInfo = true;
       });
 
-      final PlayerInfo playerInfo =
-          await widget.playerInfoService.getPlayerInfo(id: widget.playerId);
-      final List<PlayerPeer> playerPeers =
-          await widget.playerInfoService.getPlayerPeers(id: widget.playerId);
-      final List<PlayerRecentMatch> recentMatches =
-          await widget.playerInfoService.getRecentMatches(id: widget.playerId);
-      final PlayerStatistic playerStatistic =
-          await widget.playerInfoService.getGameStatistic(id: widget.playerId);
+      final pIS = widget.playerInfoService;
+
+      final playerInfo = await pIS.getPlayerInfo(id: widget.playerId);
+      final playerPeers = await pIS.getPlayerPeers(id: widget.playerId);
+      final recentMatches = await pIS.getRecentMatches(id: widget.playerId);
+      final playerStatistic = await pIS.getGameStatistic(id: widget.playerId);
+      final playerHeroes = await pIS.getPlayerHeroes(id: widget.playerId);
 
       if (!mounted) return;
 
@@ -60,10 +62,11 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
         _playerPeers = playerPeers;
         _recentMatches = recentMatches;
         _playerStatistic = playerStatistic;
+        _playerHeroes = playerHeroes;
         _isLoadingInfo = false;
       });
     } catch (e) {
-      print(e);
+      print('err: $e');
       if (!mounted) return;
 
       setState(() {
@@ -77,20 +80,21 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
   Widget build(BuildContext context) {
     if (_isLoadingInfo) {
       return const SizedBox(
-          width: 240,
+          width: 310,
           height: 700,
           child: Card(child: Center(child: CircularProgressIndicator())));
     }
 
     if (_isLoadingError) {
       return SizedBox(
-        width: 240,
-        height: 700,
-        child: Card(child: Center(child: Text('(error ${widget.playerId})'))));
+          width: 310,
+          height: 700,
+          child:
+              Card(child: Center(child: Text('(error ${widget.playerId})'))));
     }
 
     return SizedBox(
-      width: 270,
+      width: 310,
       child: Card(
           child: InkWell(
               enableFeedback: false,
@@ -106,6 +110,7 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
                                 rank: _playerInfo?.rankTier,
                                 profile: _playerInfo!.profile!,
                                 statistic: _playerStatistic!),
+                            PlayerInfoHeroesWidget(heroes: _playerHeroes!),
                             PlayerInfoMatchesWidget(matches: _recentMatches),
                             PlayerInfoPeersWidget(peers: _playerPeers)
                           ],

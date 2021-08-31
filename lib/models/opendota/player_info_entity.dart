@@ -44,11 +44,11 @@ class PlayerInfoProfile {
   late int accountId;
   late String personaname;
   late int cheese;
-  late String steamid;
-  late String avatar;
-  late String avatarmedium;
-  late String avatarfull;
-  late String profileurl;
+  late String? steamid;
+  late String? avatar;
+  late String? avatarmedium;
+  late String? avatarfull;
+  late String? profileurl;
   late String? lastLogin;
   late String? loccountrycode;
   late bool isContributor;
@@ -68,7 +68,7 @@ class PlayerInfoProfile {
 
   PlayerInfoProfile.fromJson(Map<String, dynamic> json) {
     accountId = json['account_id'];
-    personaname = json['personaname'];
+    personaname = json['personaname'] ?? '';
     cheese = json['cheese'];
     steamid = json['steamid'];
     avatar = json['avatar'];

@@ -26,7 +26,7 @@ class GameSideWidget extends StatelessWidget {
       Align(
           alignment: Alignment.centerLeft,
           child: SizedBox(
-              height: 400,
+              height: 380,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -35,7 +35,7 @@ class GameSideWidget extends StatelessWidget {
 
                     return Padding(
                         padding: const EdgeInsets.only(right: 5),
-                        child: PlayerInfoWidget(playerId: currentId));
+                        child: PlayerInfoWidget(key: Key(currentId.toString()), playerId: currentId));
                   },
                   itemCount: players?.length ?? 0)))
     ]);

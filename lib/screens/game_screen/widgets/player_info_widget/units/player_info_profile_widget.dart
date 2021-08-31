@@ -32,9 +32,9 @@ class PlayerInfoProfileWidget extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 10),
                 child: CircleAvatar(
-                    backgroundImage: NetworkImage(profile.avatarfull)),
+                    backgroundImage: profile.avatarfull != null ? NetworkImage(profile.avatarfull!) : null),
               ),
-              Text(profile.personaname)
+              SizedBox(width: 100, child: Text(profile.personaname, overflow: TextOverflow.ellipsis))
             ]),
             Stack(children: [
               Padding(

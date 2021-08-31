@@ -13,9 +13,9 @@ class PlayerRecentMatch {
   late int? skill;
   late int xpPerMin;
   late int goldPerMin;
-  late int heroDamage;
-  late int towerDamage;
-  late int heroHealing;
+  late int? heroDamage;
+  late int? towerDamage;
+  late int? heroHealing;
   late int lastHits;
   late int cluster;
   late int leaverStatus;

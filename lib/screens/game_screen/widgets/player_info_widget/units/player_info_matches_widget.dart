@@ -5,8 +5,9 @@ import 'package:dota2checker/models/opendota/player_recent_match.dart';
 import 'package:dota2checker/models/opendota/dota_heroes.dart';
 import 'package:dota2checker/controllers/opendota/dota_heroes_controller.dart';
 import 'package:dota2checker/utils/list_find.dart';
+import 'package:dota2checker/constants/url.dart';
 
-const int radiantMaxSlot = 120;
+const int radiantMaxSlot = 127;
 
 class PlayerInfoMatchesWidget extends StatelessWidget {
   final List<PlayerRecentMatch>? matches;
@@ -36,7 +37,9 @@ class PlayerInfoMatchesWidget extends StatelessWidget {
 
                     final bool isPlayedRadiant =
                         match.playerSlot < radiantMaxSlot;
-                    final bool isWin = isPlayedRadiant && match.radiantWin;
+                    final bool isWin = isPlayedRadiant ? match.radiantWin : !match.radiantWin;
+
+                    if (match.heroId == 0) return Container();
 
                     return SizedBox(
                         height: 25,
@@ -50,16 +53,14 @@ class PlayerInfoMatchesWidget extends StatelessWidget {
                                         (hero) => hero.id == match.heroId);
 
                                     String name = currHero!.localizedName;
-                                    String npcName = currHero.name
-                                        .replaceFirst('npc_dota_hero_', '');
+                                    String npcName = currHero.name.replaceFirst('npc_dota_hero_', '');
 
                                     return Row(children: [
                                       Padding(
                                           padding:
                                               const EdgeInsets.only(right: 5),
                                           child: Image(
-                                            image: NetworkImage(
-                                                'https://steamcdn-a.akamaihd.net/apps/dota2/images/heroes/${npcName}_full.png'),
+                                            image: NetworkImage('$heroImgUrl${npcName}.png'),
                                             width: 25,
                                             height: 25,
                                           )),

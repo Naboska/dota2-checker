@@ -24,7 +24,7 @@ class PlayerInfoPeersWidget extends StatelessWidget {
               child: Text('Статистика с другими игроками:',
                   style: TextStyle(fontWeight: FontWeight.w600)))),
       SizedBox(
-          height: 125,
+          height: 75,
           child: ListView.builder(
               scrollDirection: Axis.vertical,
               itemBuilder: (context, i) {
@@ -43,12 +43,12 @@ class PlayerInfoPeersWidget extends StatelessWidget {
                                 radius: 10,
                                 backgroundImage:
                                     NetworkImage(peer.avatarfull))),
-                            Text(peer.personaname)
+                            SizedBox(width: 100, child: Text(peer.personaname, maxLines: 1, overflow: TextOverflow.ellipsis))
                           ]),
                           TextPercentWidget(percent: percentWin),
                         ]));
               },
-              itemCount: peersCount != 0 && peersCount > 5 ? 5 : peersCount))
+              itemCount: peersCount != 0 && peersCount > 3 ? 3 : peersCount))
     ]);
   }
 }

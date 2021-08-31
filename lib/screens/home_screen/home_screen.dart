@@ -22,19 +22,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool _isDotaPathSelected = false;
   bool _isInitialize = false;
+  bool _isInitializeError = false;
 
   Future<void> _initializeApp() async {
-    setState(() => _isInitialize = false);
+    try {
+      setState(() {
+        _isInitializeError = false;
+        _isInitialize = false;
+      });
 
-    final dir = await widget.dotaDirectory.getDotaDirectory();
-    final heroes = await widget.dotaService.getHeroes();
+      final dir = await widget.dotaDirectory.getDotaDirectory();
+      final heroes = await widget.dotaService.getHeroes();
 
-    widget.heroesController.change(heroes);
+      widget.heroesController.change(heroes);
 
-    setState(() {
-      _isInitialize = true;
-      _isDotaPathSelected = dir != null ? true : false;
-    });
+      setState(() {
+        _isInitialize = true;
+        _isDotaPathSelected = dir != null ? true : false;
+      });
+    } catch (e) {
+      setState(() => _isInitializeError = true);
+    }
   }
 
   @override
@@ -46,8 +54,25 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isInitializeError) {
+      return Scaffold(
+          body: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+            const Padding(
+                padding: EdgeInsets.only(bottom: 14),
+                child: Text('Произошла ошибка при иниализации')),
+            ElevatedButton(
+                onPressed: _initializeApp,
+                child: const Text('Попробовать еще раз'))
+          ])));
+    }
+
     if (!_isInitialize) return const Center(child: CircularProgressIndicator());
 
-    return _isDotaPathSelected ? GameScreen() : SettingsScreen(reInitialize: _initializeApp);
+    return _isDotaPathSelected
+        ? GameScreen()
+        : SettingsScreen(reInitialize: _initializeApp);
   }
 }
