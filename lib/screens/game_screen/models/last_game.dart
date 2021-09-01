@@ -2,7 +2,13 @@ import 'dart:math';
 
 import 'package:dota2checker/utils/numeric_safe_parser.dart';
 
-const findGames = ['DOTA_GAMEMODE_TURBO', 'DOTA_GAMEMODE_1V1MID', 'DOTA_GAMEMODE_ABILITY_DRAFT'];
+const gameModeTurbo = 'DOTA_GAMEMODE_TURBO';
+const findGames = [
+  gameModeTurbo,
+  'DOTA_GAMEMODE_1V1MID',
+  'DOTA_GAMEMODE_ABILITY_DRAFT',
+  'DOTA_GAMEMODE_ALL_DRAFT'
+];
 const minPlayerIndex = 7;
 const maxPlayerIndex = 16;
 const endTimeIndex = 21;
@@ -12,6 +18,7 @@ class LastGame {
   List<int> dire = [];
   String? lobby;
   String? gameTime;
+  bool isTurbo = false;
 
   LastGame.fromServerConfig({required String serverConfig}) {
     final List<String> textList = serverConfig.split('\r\n');
@@ -51,6 +58,7 @@ class LastGame {
       dire = newDire;
       gameTime = last.substring(0, endTimeIndex);
       lobby = gameInfo[5];
+      isTurbo = last.contains(gameModeTurbo);
     }
   }
 

@@ -22,44 +22,49 @@ class PlayerInfoHeroesWidget extends StatelessWidget {
 
     if (heroesItems == 0) return SizedBox(height: 30, child: Container());
 
-    return SizedBox(
-        height: 30,
-        child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, i) {
-              final PlayerHeroes playerHero = filteredHeroes[i];
+    return Padding(
+        padding: const EdgeInsets.only(bottom: 5),
+        child: SizedBox(
+            height: 30,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, i) {
+                  final PlayerHeroes playerHero = filteredHeroes[i];
 
-              return GetBuilder<DotaHeroesController>(
-                builder: (_c) {
-                  DotaHeroes? currHero = listFind<DotaHeroes>(_c.heroes,
-                      (hero) => hero.id == int.parse(playerHero.heroId));
+                  return GetBuilder<DotaHeroesController>(
+                    builder: (_c) {
+                      DotaHeroes? currHero = listFind<DotaHeroes>(_c.heroes,
+                          (hero) => hero.id == int.parse(playerHero.heroId));
 
-                  String npcName =
-                      currHero!.name.replaceFirst('npc_dota_hero_', '');
-                  double winRate = (playerHero.win / playerHero.games) * 100;
+                      String npcName =
+                          currHero!.name.replaceFirst('npc_dota_hero_', '');
+                      double winRate =
+                          (playerHero.win / playerHero.games) * 100;
 
-                  return Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: Row(children: [
-                        Container(
-                              color: Colors.black38,
-                              child: Padding(
-                                  padding: const EdgeInsets.only(right: 5, left: 2, top: 1),
-                                  child: Column(children: [
-                                Text('${playerHero.games}',
-                                    style: const TextStyle(fontSize: 10)),
-                                TextPercentWidget(percent: winRate, fontSize: 10,)
-                              ]))
-                        ),
-                        Image(
-                          image: NetworkImage('$heroImgUrl$npcName.png'),
-
-                          height: 40,
-                        )
-                      ]));
+                      return Padding(
+                          padding: const EdgeInsets.only(right: 5),
+                          child: Row(children: [
+                            Container(
+                                color: Colors.black38,
+                                child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 5, left: 2, top: 1),
+                                    child: Column(children: [
+                                      Text('${playerHero.games}',
+                                          style: const TextStyle(fontSize: 10)),
+                                      TextPercentWidget(
+                                        percent: winRate,
+                                        fontSize: 10,
+                                      )
+                                    ]))),
+                            Image(
+                              image: NetworkImage('$heroImgUrl$npcName.png'),
+                              height: 40,
+                            )
+                          ]));
+                    },
+                  );
                 },
-              );
-            },
-            itemCount: heroesItems));
+                itemCount: heroesItems)));
   }
 }

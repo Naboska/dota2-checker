@@ -51,6 +51,7 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isGameTurbo = lastGame?.isTurbo ?? true;
     final bool isRadiantNotEmpty =
         lastGame?.radiant != null && lastGame!.radiant.isNotEmpty;
     final bool isDireNotEmpty =
@@ -68,25 +69,31 @@ class _GameScreenState extends State<GameScreen> {
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Row(children: [
-                        const Text('Лобби:',
-                            style: TextStyle(
+                        Text('Лобби${isGameTurbo ? '(Turbo)' : ''}',
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w900, fontSize: 15)),
                         Padding(
                             padding: const EdgeInsets.only(right: 5),
                             child: Text(' ${lastGame?.lobby ?? 'не найдено'}')),
-                        Text(lastGame?.gameTime != null ? '(${lastGame!.gameTime})' : '')
+                        Text(lastGame?.gameTime != null
+                            ? '(${lastGame!.gameTime})'
+                            : '')
                       ])),
                   isRadiantNotEmpty
                       ? GameSideWidget(
                           side: 'The Radiant',
                           sideColor: radiantColor,
-                          players: lastGame?.radiant)
+                          players: lastGame?.radiant,
+                          isTurbo: isGameTurbo,
+                        )
                       : Container(),
                   isDireNotEmpty
                       ? GameSideWidget(
                           side: 'The Dire',
                           sideColor: direColor,
-                          players: lastGame?.dire)
+                          players: lastGame?.dire,
+                          isTurbo: isGameTurbo,
+                        )
                       : Container(),
                 ]))));
   }

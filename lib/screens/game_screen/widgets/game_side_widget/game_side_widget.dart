@@ -6,9 +6,14 @@ class GameSideWidget extends StatelessWidget {
   final String side;
   final Color sideColor;
   final List<int>? players;
+  final bool isTurbo;
 
   const GameSideWidget(
-      {Key? key, this.players, required this.side, required this.sideColor})
+      {Key? key,
+      this.players,
+      required this.side,
+      required this.sideColor,
+      required this.isTurbo})
       : super(key: key);
 
   @override
@@ -26,7 +31,7 @@ class GameSideWidget extends StatelessWidget {
       Align(
           alignment: Alignment.centerLeft,
           child: SizedBox(
-              height: 380,
+              height: 375,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -35,7 +40,11 @@ class GameSideWidget extends StatelessWidget {
 
                     return Padding(
                         padding: const EdgeInsets.only(right: 5),
-                        child: PlayerInfoWidget(key: Key(currentId.toString()), playerId: currentId));
+                        child: PlayerInfoWidget(
+                          key: Key(currentId.toString()),
+                          playerId: currentId,
+                          isTurbo: isTurbo,
+                        ));
                   },
                   itemCount: players?.length ?? 0)))
     ]);

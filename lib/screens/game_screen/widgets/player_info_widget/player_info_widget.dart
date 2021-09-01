@@ -17,8 +17,10 @@ import 'units/player_info_profile_widget.dart';
 class PlayerInfoWidget extends StatefulWidget {
   final PlayerInfoService playerInfoService = PlayerInfoService();
   final int playerId;
+  final bool isTurbo;
 
-  PlayerInfoWidget({Key? key, required this.playerId}) : super(key: key);
+  PlayerInfoWidget({Key? key, required this.playerId, required this.isTurbo})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PlayerInfoWidgetState();
@@ -50,10 +52,14 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
       final pIS = widget.playerInfoService;
 
       final playerInfo = await pIS.getPlayerInfo(id: widget.playerId);
-      final playerPeers = await pIS.getPlayerPeers(id: widget.playerId);
-      final recentMatches = await pIS.getRecentMatches(id: widget.playerId);
-      final playerStatistic = await pIS.getGameStatistic(id: widget.playerId);
-      final playerHeroes = await pIS.getPlayerHeroes(id: widget.playerId);
+      final playerPeers = await pIS.getPlayerPeers(
+          id: widget.playerId, isTurbo: widget.isTurbo);
+      final recentMatches = await pIS.getRecentMatches(
+          id: widget.playerId, isTurbo: widget.isTurbo);
+      final playerStatistic = await pIS.getGameStatistic(
+          id: widget.playerId, isTurbo: widget.isTurbo);
+      final playerHeroes = await pIS.getPlayerHeroes(
+          id: widget.playerId, isTurbo: widget.isTurbo);
 
       if (!mounted) return;
 
@@ -81,14 +87,12 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
     if (_isLoadingInfo) {
       return const SizedBox(
           width: 310,
-          height: 700,
           child: Card(child: Center(child: CircularProgressIndicator())));
     }
 
     if (_isLoadingError) {
       return SizedBox(
           width: 310,
-          height: 700,
           child:
               Card(child: Center(child: Text('(error ${widget.playerId})'))));
     }

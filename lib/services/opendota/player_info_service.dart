@@ -8,6 +8,8 @@ import 'package:dota2checker/models/opendota/player_statistic.dart';
 
 import 'opendota_http.dart';
 
+const turboModeParam = 'significant=0&game_mode=23';
+
 class PlayerInfoService extends OpenDotaHttp {
   Future<PlayerInfo> getPlayerInfo({required int id}) async {
     final response = await getRequest('/players/$id');
@@ -23,8 +25,10 @@ class PlayerInfoService extends OpenDotaHttp {
     }
   }
 
-  Future<PlayerStatistic> getGameStatistic({required int id}) async {
-    final response = await getRequest('/players/$id/wl?significant=0&game_mode=23');
+  Future<PlayerStatistic> getGameStatistic(
+      {required int id, required bool isTurbo}) async {
+    final response =
+        await getRequest('/players/$id/wl?${isTurbo ? turboModeParam : ''}');
 
     switch (response.statusCode) {
       case 200:
@@ -37,8 +41,10 @@ class PlayerInfoService extends OpenDotaHttp {
     }
   }
 
-  Future<List<PlayerPeer>> getPlayerPeers({required int id}) async {
-    final response = await getRequest('/players/$id/peers?significant=0&game_mode=23');
+  Future<List<PlayerPeer>> getPlayerPeers(
+      {required int id, required bool isTurbo}) async {
+    final response =
+        await getRequest('/players/$id/peers?${isTurbo ? turboModeParam : ''}');
 
     switch (response.statusCode) {
       case 200:
@@ -51,8 +57,10 @@ class PlayerInfoService extends OpenDotaHttp {
     }
   }
 
-  Future<List<PlayerRecentMatch>> getRecentMatches({required int id}) async {
-    final response = await getRequest('/players/$id/recentMatches?significant=0&game_mode=23');
+  Future<List<PlayerRecentMatch>> getRecentMatches(
+      {required int id, required bool isTurbo}) async {
+    final response = await getRequest(
+        '/players/$id/recentMatches?${isTurbo ? turboModeParam : ''}');
 
     switch (response.statusCode) {
       case 200:
@@ -65,8 +73,11 @@ class PlayerInfoService extends OpenDotaHttp {
     }
   }
 
-  Future<List<PlayerHeroes>> getPlayerHeroes({required int id}) async {
-    final response = await getRequest('/players/$id/heroes?significant=0&game_mode=23');
+  Future<List<PlayerHeroes>> getPlayerHeroes(
+      {required int id, required bool isTurbo}) async {
+    final response =
+        await getRequest('/players/$id/heroes?${isTurbo ? turboModeParam : ''
+        }');
 
     switch (response.statusCode) {
       case 200:

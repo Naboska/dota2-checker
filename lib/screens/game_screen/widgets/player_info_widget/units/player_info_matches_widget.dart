@@ -20,7 +20,7 @@ class PlayerInfoMatchesWidget extends StatelessWidget {
     final List<PlayerRecentMatch> _matches = matches ?? [];
 
     return Padding(
-        padding: const EdgeInsets.only(bottom: 14),
+        padding: const EdgeInsets.only(bottom: 5),
         child: Column(children: [
           const Padding(
               padding: EdgeInsets.only(bottom: 5),
