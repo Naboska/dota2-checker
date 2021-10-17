@@ -27,6 +27,7 @@ class PlayerInfoHeroesWidget extends StatelessWidget {
             height: 30,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, i) {
                   final PlayerHeroes playerHero = filteredHeroes[i];
 
@@ -39,7 +40,9 @@ class PlayerInfoHeroesWidget extends StatelessWidget {
 
                       return Padding(
                           padding: const EdgeInsets.only(right: 5),
-                          child: Row(children: [
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
                             Container(
                                 color: Colors.black38,
                                 child: Padding(

@@ -86,19 +86,19 @@ class _PlayerInfoWidgetState extends State<PlayerInfoWidget> {
   Widget build(BuildContext context) {
     if (_isLoadingInfo) {
       return const SizedBox(
-          width: 310,
+          width: 317,
           child: Card(child: Center(child: CircularProgressIndicator())));
     }
 
     if (_isLoadingError) {
       return SizedBox(
-          width: 310,
+          width: 317,
           child:
               Card(child: Center(child: Text('(error ${widget.playerId})'))));
     }
 
     return SizedBox(
-      width: 310,
+      width: 317,
       child: Card(
           child: InkWell(
               enableFeedback: false,

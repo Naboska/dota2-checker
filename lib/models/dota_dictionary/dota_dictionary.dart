@@ -6,8 +6,9 @@ class DotaDictionary {
   late Map<String, DotaDictionaryItem> items;
   late Map<String, DotaDictionaryHero> heroes;
   late Map<String, DotaDictionaryAbilities> abilities;
+  late String path;
 
-  DotaDictionary({required Map<String, dynamic> items, required Map<String, dynamic> heroes, required Map<String, dynamic> abilities}) {
+  DotaDictionary({required Map<String, dynamic> items, required Map<String, dynamic> heroes, required Map<String, dynamic> abilities, required this.path}) {
     this.items = _createDictionary<DotaDictionaryItem>(items, (value) => DotaDictionaryItem.fromJson(value));
     this.heroes = _createDictionary<DotaDictionaryHero>(heroes, (value) => DotaDictionaryHero.fromJson(value));
     this.abilities = _createDictionary<DotaDictionaryAbilities>(abilities, (value) => DotaDictionaryAbilities.fromJson(value));

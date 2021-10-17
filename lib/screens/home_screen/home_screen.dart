@@ -38,14 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _initializeApp() async {
     try {
       final dir = await Dota.getDirectory();
-      final itemsDict = await DictionaryService.getItems();
-      final heroesDict = await DictionaryService.getHeroes();
-      final abilitiesDict = await DictionaryService.getAbilities();
+      final isPathEmpty = dir == null;
 
-      final dotaDictionary = DotaDictionary(items: itemsDict, heroes: heroesDict, abilities: abilitiesDict);
-      widget.dictionaryController.change(dotaDictionary);
+      if (!isPathEmpty) {
+        final itemsDict = await DictionaryService.getItems();
+        final heroesDict = await DictionaryService.getHeroes();
+        final abilitiesDict = await DictionaryService.getAbilities();
 
-      _setError(dir == null);
+        widget.dictionaryController.change(DotaDictionary(
+            items: itemsDict,
+            heroes: heroesDict,
+            abilities: abilitiesDict,
+            path: dir!));
+      }
+
+      _setError(isPathEmpty);
     } catch (e) {
       print(e);
       _setError(true);
@@ -58,11 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (_isInitializeError) {
       return const Scaffold(
-          body: Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 14),
-              child: Text('Произошла ошибка при иниализации')),
-      ));
+          body: Center(child: Text('Произошла ошибка при иниализации')));
     }
 
     return const GameScreen();

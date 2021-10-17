@@ -18,7 +18,7 @@ class GameSideWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(children: <Widget>[
       Align(
           alignment: Alignment.centerLeft,
           child: Padding(
@@ -34,7 +34,6 @@ class GameSideWidget extends StatelessWidget {
               height: 375,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
                   itemBuilder: (context, i) {
                     final int currentId = players![i];
 

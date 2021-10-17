@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:dota2checker/utils/dota.dart';
 import 'package:dota2checker/constants/theme.dart';
 import 'package:dota2checker/widgets/situation_widget/situation_widget.dart';
 import 'package:dota2checker/controllers/dota_dictionary/dota_dictionary_controller.dart';
 
 import 'units/game_side_widget.dart';
-import './models/last_game.dart';
+import 'models/last_game.dart';
 
 class GamePlayersWidget extends StatefulWidget {
   const GamePlayersWidget({Key? key}) : super(key: key);
@@ -19,18 +19,17 @@ class GamePlayersWidget extends StatefulWidget {
 }
 
 class _GameGamePlayersState extends State<GamePlayersWidget> {
-  final DotaDictionaryController dictController = Get.find();
-  Timer? gameCheckTimer;
-  LastGame? lastGame;
+  final DotaDictionaryController _c = Get.find();
+  Timer? _gameCheckTimer;
+  LastGame? _lastGame;
 
   Future<void> _read() async {
-    String? dotaDir = await Dota.getDirectory();
-    File file = File('$dotaDir/dota/server_log.txt');
+    File file = File('${_c.dictionary!.path}/dota/server_log.txt');
     String serverConfig = await file.readAsString();
     LastGame newGame = LastGame(serverConfig: serverConfig);
 
-    if (newGame.gameTime != lastGame?.gameTime) {
-      setState(() => lastGame = newGame);
+    if (newGame.gameTime != _lastGame?.gameTime) {
+      setState(() => _lastGame = newGame);
     }
   }
 
@@ -38,7 +37,7 @@ class _GameGamePlayersState extends State<GamePlayersWidget> {
   void initState() {
     _read();
 
-    gameCheckTimer =
+    _gameCheckTimer =
         Timer.periodic(const Duration(seconds: 5), (timer) => _read());
 
     super.initState();
@@ -46,26 +45,32 @@ class _GameGamePlayersState extends State<GamePlayersWidget> {
 
   @override
   void dispose() {
-    gameCheckTimer!.cancel();
+    _gameCheckTimer!.cancel();
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isGameTurbo = lastGame?.isTurbo ?? false;
+    final bool isGameTurbo = _lastGame?.isTurbo ?? false;
     final bool isRadiantNotEmpty =
-        lastGame?.radiant != null && lastGame!.radiant.isNotEmpty;
+        _lastGame?.radiant != null && _lastGame!.radiant.isNotEmpty;
     final bool isDireNotEmpty =
-        lastGame?.dire != null && lastGame!.dire.isNotEmpty;
+        _lastGame?.dire != null && _lastGame!.dire.isNotEmpty;
 
-    return Column(children: [
+    return ScrollConfiguration(behavior: ScrollConfiguration.of(context).copyWith(
+      dragDevices: {
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.touch,
+      },
+    ), child: Flexible(
+        child: Column(children: [
       SituationWidget(
           isRender: isRadiantNotEmpty,
           child: () => GameSideWidget(
                 side: 'The Radiant',
                 sideColor: radiantColor,
-                players: lastGame?.radiant,
+                players: _lastGame?.radiant,
                 isTurbo: isGameTurbo,
               )),
       SituationWidget(
@@ -73,9 +78,10 @@ class _GameGamePlayersState extends State<GamePlayersWidget> {
           child: () => GameSideWidget(
                 side: 'The Dire',
                 sideColor: direColor,
-                players: lastGame?.dire,
+                players: _lastGame?.dire,
                 isTurbo: isGameTurbo,
               ))
-    ]);
+    ],
+          crossAxisAlignment: CrossAxisAlignment.start)));
   }
 }
