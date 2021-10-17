@@ -1,17 +1,15 @@
-import 'package:dota2checker/services/opendota/game_service.dart';
+import 'package:dota2checker/models/dota_dictionary/dota_dictionary.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:dota2checker/controllers/opendota/dota_heroes_controller.dart';
-import 'package:dota2checker/utils/dota_directory.dart';
+import 'package:dota2checker/services/dictionary/dictionary_service.dart';
+import 'package:dota2checker/controllers/dota_dictionary/dota_dictionary_controller.dart';
+import 'package:dota2checker/utils/dota.dart';
 
 import '../game_screen/game_screen.dart';
-import '../settings_screen/settings_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final dotaDirectory = DotaDirectory();
-  final heroesController = Get.put(DotaHeroesController());
-  final dotaService = GameService();
+  final dictionaryController = Get.put(DotaDictionaryController());
 
   HomeScreen({Key? key}) : super(key: key);
 
@@ -20,30 +18,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isDotaPathSelected = false;
   bool _isInitialize = false;
   bool _isInitializeError = false;
-
-  Future<void> _initializeApp() async {
-    try {
-      setState(() {
-        _isInitializeError = false;
-        _isInitialize = false;
-      });
-
-      final dir = await widget.dotaDirectory.getDotaDirectory();
-      final heroes = await widget.dotaService.getHeroes();
-
-      widget.heroesController.change(heroes);
-
-      setState(() {
-        _isInitialize = true;
-        _isDotaPathSelected = dir != null ? true : false;
-      });
-    } catch (e) {
-      setState(() => _isInitializeError = true);
-    }
-  }
 
   @override
   void initState() {
@@ -52,27 +28,43 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+  _setError(bool isError) {
+    setState(() {
+      _isInitialize = true;
+      _isInitializeError = isError;
+    });
+  }
+
+  Future<void> _initializeApp() async {
+    try {
+      final dir = await Dota.getDirectory();
+      final itemsDict = await DictionaryService.getItems();
+      final heroesDict = await DictionaryService.getHeroes();
+      final abilitiesDict = await DictionaryService.getAbilities();
+
+      final dotaDictionary = DotaDictionary(items: itemsDict, heroes: heroesDict, abilities: abilitiesDict);
+      widget.dictionaryController.change(dotaDictionary);
+
+      _setError(dir == null);
+    } catch (e) {
+      print(e);
+      _setError(true);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (_isInitializeError) {
-      return Scaffold(
-          body: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-            const Padding(
-                padding: EdgeInsets.only(bottom: 14),
-                child: Text('Произошла ошибка при иниализации')),
-            ElevatedButton(
-                onPressed: _initializeApp,
-                child: const Text('Попробовать еще раз'))
-          ])));
-    }
-
     if (!_isInitialize) return const Center(child: CircularProgressIndicator());
 
-    return _isDotaPathSelected
-        ? GameScreen()
-        : SettingsScreen(reInitialize: _initializeApp);
+    if (_isInitializeError) {
+      return const Scaffold(
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 14),
+              child: Text('Произошла ошибка при иниализации')),
+      ));
+    }
+
+    return const GameScreen();
   }
 }

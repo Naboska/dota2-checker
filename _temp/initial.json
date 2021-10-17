@@ -1,0 +1,59 @@
+{
+    "buildings": {
+        "radiant": {}
+    },
+    "provider": {
+        "name": "Dota 2",
+        "appid": 570,
+        "version": 47,
+        "timestamp": 1634201891
+    },
+    "map": {
+        "name": "start",
+        "matchid": 6222107270,
+        "game_time": 5,
+        "clock_time": -7,
+        "daytime": false,
+        "nightstalker_night": false,
+        "game_state": "DOTA_GAMERULES_STATE_HERO_SELECTION",
+        "paused": false,
+        "win_team": "none",
+        "customgamename": "",
+        "ward_purchase_cooldown": 0
+    },
+    "player": {
+        "steamid": 76561198044146880,
+        "name": "2k podpivas",
+        "activity": "playing",
+        "kills": 0,
+        "deaths": 0,
+        "assists": 0,
+        "last_hits": 0,
+        "denies": 0,
+        "kill_streak": 0,
+        "commands_issued": 0,
+        "kill_list": {},
+        "team_name": "radiant",
+        "gold": 600,
+        "gold_reliable": 0,
+        "gold_unreliable": 600,
+        "gold_from_hero_kills": 0,
+        "gold_from_creep_kills": 0,
+        "gold_from_income": 0,
+        "gold_from_shared": 0,
+        "gpm": 0,
+        "xpm": 0
+    },
+    "hero": {
+        "id": -1
+    },
+    "abilities": {},
+    "items": {},
+    "draft": {},
+    "wearables": {},
+    "previously": {
+        "map": {
+            "game_time": 4
+        }
+    }
+}

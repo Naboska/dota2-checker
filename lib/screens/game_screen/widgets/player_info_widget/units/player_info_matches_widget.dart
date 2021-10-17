@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:dota2checker/services/dictionary/dictionary_service.dart';
 import 'package:dota2checker/models/opendota/player_recent_match.dart';
-import 'package:dota2checker/models/opendota/dota_heroes.dart';
-import 'package:dota2checker/controllers/opendota/dota_heroes_controller.dart';
-import 'package:dota2checker/utils/list_find.dart';
-import 'package:dota2checker/constants/url.dart';
+import 'package:dota2checker/models/dota_dictionary/dota_dictionary_hero.dart';
+import 'package:dota2checker/controllers/dota_dictionary/dota_dictionary_controller.dart';
 
 const int radiantMaxSlot = 127;
 
@@ -46,28 +45,23 @@ class PlayerInfoMatchesWidget extends StatelessWidget {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                                GetBuilder<DotaHeroesController>(
+                                GetBuilder<DotaDictionaryController>(
                                   builder: (_c) {
-                                    DotaHeroes? currHero = listFind<DotaHeroes>(
-                                        _c.heroes,
-                                        (hero) => hero.id == match.heroId);
-
-                                    String name = currHero!.localizedName;
-                                    String npcName = currHero.name.replaceFirst('npc_dota_hero_', '');
+                                    final DotaDictionaryHero hero = _c.dictionary!.heroes[match.heroId.toString()]!;
 
                                     return Row(children: [
                                       Padding(
                                           padding:
                                               const EdgeInsets.only(right: 5),
                                           child: Image(
-                                            image: NetworkImage('$heroImgUrl${npcName}.png'),
+                                            image: NetworkImage(DictionaryService.createStatic(hero.img)),
                                             width: 25,
                                             height: 25,
                                           )),
                                       Padding(
                                           padding:
                                               const EdgeInsets.only(right: 14),
-                                          child: Text(name,
+                                          child: Text(hero.localizedName,
                                               style: TextStyle(
                                                   color: isWin
                                                       ? Colors.green

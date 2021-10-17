@@ -13,10 +13,12 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  path_provider: ^2.0.2
-  file_picker: ^4.0.0
-  http: ^0.13.3
+  path_provider: ^2.0.5
+  file_picker: ^4.1.4
+  http: ^0.13.4
   get: ^4.3.8
+  provider: ^6.0.0
+  graphql_flutter: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -26,3 +28,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/

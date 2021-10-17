@@ -1,0 +1,296 @@
+{
+  buildings: {
+    radiant: {
+      dota_goodguys_tower2_top: {
+        health: 2368,
+        max_health: 2500
+      },
+      dota_goodguys_tower3_top: {
+        health: 2500,
+        max_health: 2500
+      },
+      dota_goodguys_tower1_mid: {
+        health: 277,
+        max_health: 1350
+      },
+      dota_goodguys_tower2_mid: {
+        health: 2500,
+        max_health: 2500
+      },
+      dota_goodguys_tower3_mid: {
+        health: 2500,
+        max_health: 2500
+      },
+      dota_goodguys_tower1_bot: {
+        health: 267,
+        max_health: 1350
+      },
+      dota_goodguys_tower2_bot: {
+        health: 2500,
+        max_health: 2500
+      },
+      dota_goodguys_tower3_bot: {
+        health: 2500,
+        max_health: 2500
+      },
+      dota_goodguys_tower4_top: {
+        health: 2600,
+        max_health: 2600
+      },
+      dota_goodguys_tower4_bot: {
+        health: 2600,
+        max_health: 2600
+      },
+      good_rax_melee_top: {
+        health: 2200,
+        max_health: 2200
+      },
+      good_rax_range_top: {
+        health: 1300,
+        max_health: 1300
+      },
+      good_rax_melee_mid: {
+        health: 2200,
+        max_health: 2200
+      },
+      good_rax_range_mid: {
+        health: 1300,
+        max_health: 1300
+      },
+      good_rax_melee_bot: {
+        health: 2200,
+        max_health: 2200
+      },
+      good_rax_range_bot: {
+        health: 1300,
+        max_health: 1300
+      }
+    }
+  },
+  provider: {
+    name: Dota
+    2,
+    appid: 570,
+    version: 47,
+    timestamp: 1634215764
+  },
+  map: {
+    name: start,
+    matchid: 6222321873,
+    game_time: 1021,
+    clock_time: 875,
+    daytime: true,
+    nightstalker_night: false,
+    game_state: DOTA_GAMERULES_STATE_GAME_IN_PROGRESS,
+    paused: false,
+    win_team: none,
+    customgamename:,
+    ward_purchase_cooldown: 0
+  },
+  player: {
+    steamid: 76561198044146881,
+    name: 2k
+    podpivas,
+    activity: playing,
+    kills: 4,
+    deaths: 4,
+    assists: 0,
+    last_hits: 4,
+    denies: 0,
+    kill_streak: 0,
+    commands_issued: 455,
+    kill_list: {
+      victimid_6: 1,
+      victimid_7: 1,
+      victimid_8: 1,
+      victimid_9: 1
+    },
+    team_name: radiant,
+    gold: 61371,
+    gold_reliable: 1188,
+    gold_unreliable: 60183,
+    gold_from_hero_kills: 4054,
+    gold_from_creep_kills: 380,
+    gold_from_income: 1517,
+    gold_from_shared: 1211,
+    gpm: 75428344,
+    xpm: 2811
+  },
+  hero: {
+    xpos: 4076,
+    ypos: 3421,
+    id: 95,
+    name: npc_dota_hero_troll_warlord,
+    level: 27,
+    xp: 41044,
+    alive: false,
+    respawn_seconds: 97,
+    buyback_cost: 11056,
+    buyback_cooldown: 1244,
+    health: 0,
+    max_health: 2400,
+    health_percent: 0,
+    mana: 711,
+    max_mana: 711,
+    mana_percent: 100,
+    silenced: false,
+    stunned: false,
+    disarmed: false,
+    magicimmune: false,
+    hexed: false,
+    muted: false,
+    break: false,
+    aghanims_scepter: false,
+    aghanims_shard: false,
+    smoked: false,
+    has_debuff: false,
+    talent_1: true,
+    talent_2: true,
+    talent_3: false,
+    talent_4: true,
+    talent_5: false,
+    talent_6: true,
+    talent_7: false,
+    talent_8: true
+  },
+  abilities: {
+    ability0: {
+      name: troll_warlord_berserkers_rage,
+      level: 4,
+      can_cast: true,
+      passive: false,
+      ability_active: true,
+      cooldown: 0,
+      ultimate: false
+    },
+    ability1: {
+      name: troll_warlord_whirling_axes_ranged,
+      level: 4,
+      can_cast: false,
+      passive: false,
+      ability_active: false,
+      cooldown: 0,
+      ultimate: false
+    },
+    ability2: {
+      name: troll_warlord_whirling_axes_melee,
+      level: 4,
+      can_cast: true,
+      passive: false,
+      ability_active: true,
+      cooldown: 0,
+      ultimate: false
+    },
+    ability3: {
+      name: troll_warlord_fervor,
+      level: 4,
+      can_cast: false,
+      passive: true,
+      ability_active: true,
+      cooldown: 0,
+      ultimate: false
+    },
+    ability4: {
+      name: troll_warlord_battle_trance,
+      level: 3,
+      can_cast: true,
+      passive: false,
+      ability_active: true,
+      cooldown: 0,
+      ultimate: true
+    }
+  },
+  items: {
+    slot0: {
+      name: item_black_king_bar,
+      purchaser: 0,
+      can_cast: true,
+      cooldown: 0,
+      passive: false
+    },
+    slot1: {
+      name: item_phase_boots,
+      purchaser: 0,
+      can_cast: true,
+      cooldown: 0,
+      passive: false
+    },
+    slot2: {
+      name: item_blink,
+      purchaser: 0,
+      can_cast: false,
+      cooldown: 1,
+      passive: false
+    },
+    slot3: {
+      name: empty
+    },
+    slot4: {
+      name: empty
+    },
+    slot5: {
+      name: empty
+    },
+    slot6: {
+      name: empty
+    },
+    slot7: {
+      name: empty
+    },
+    slot8: {
+      name: empty
+    },
+    stash0: {
+      name: empty
+    },
+    stash1: {
+      name: empty
+    },
+    stash2: {
+      name: empty
+    },
+    stash3: {
+      name: empty
+    },
+    stash4: {
+      name: empty
+    },
+    stash5: {
+      name: empty
+    },
+    teleport0: {
+      name: item_tpscroll,
+      purchaser: 0,
+      can_cast: true,
+      cooldown: 0,
+      passive: false,
+      charges: 5
+    },
+    neutral0: {
+      name: empty
+    }
+  },
+  draft: {},
+  wearables: {
+    wearable0: 7818,
+    style0: 1,
+    wearable1: 18494,
+    wearable2: 18567,
+    wearable3: 18110,
+    wearable4: 8073,
+    wearable5: 647,
+    wearable6: 14912
+  },
+  previously: {
+    map: {
+      game_time: 1020
+    },
+    player: {
+      gold: 61370,
+      gold_reliable: 1187,
+      gold_from_income: 1516,
+      gpm: 75454184,
+      xpm: 2812
+    }
+  }
+}

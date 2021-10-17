@@ -1,12 +1,11 @@
-import 'package:dota2checker/widgets/text_percent_widget/text_percent_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:dota2checker/models/dota_dictionary/dota_dictionary_hero.dart';
 import 'package:dota2checker/models/opendota/player_heroes.dart';
-import 'package:dota2checker/models/opendota/dota_heroes.dart';
-import 'package:dota2checker/controllers/opendota/dota_heroes_controller.dart';
-import 'package:dota2checker/utils/list_find.dart';
-import 'package:dota2checker/constants/url.dart';
+import 'package:dota2checker/controllers/dota_dictionary/dota_dictionary_controller.dart';
+import 'package:dota2checker/widgets/text_percent_widget/text_percent_widget.dart';
+import 'package:dota2checker/services/dictionary/dictionary_service.dart';
 
 class PlayerInfoHeroesWidget extends StatelessWidget {
   final List<PlayerHeroes>? heroes;
@@ -31,13 +30,10 @@ class PlayerInfoHeroesWidget extends StatelessWidget {
                 itemBuilder: (context, i) {
                   final PlayerHeroes playerHero = filteredHeroes[i];
 
-                  return GetBuilder<DotaHeroesController>(
+                  return GetBuilder<DotaDictionaryController>(
                     builder: (_c) {
-                      DotaHeroes? currHero = listFind<DotaHeroes>(_c.heroes,
-                          (hero) => hero.id == int.parse(playerHero.heroId));
+                      final DotaDictionaryHero hero = _c.dictionary!.heroes[playerHero.heroId]!;
 
-                      String npcName =
-                          currHero!.name.replaceFirst('npc_dota_hero_', '');
                       double winRate =
                           (playerHero.win / playerHero.games) * 100;
 
@@ -58,7 +54,7 @@ class PlayerInfoHeroesWidget extends StatelessWidget {
                                       )
                                     ]))),
                             Image(
-                              image: NetworkImage('$heroImgUrl$npcName.png'),
+                              image: NetworkImage('${DictionaryService.createStatic(hero.img)}'),
                               height: 40,
                             )
                           ]));
