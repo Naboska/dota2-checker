@@ -1,14 +1,6 @@
 {
   buildings: {
     radiant: {
-      dota_goodguys_tower2_top: {
-        health: 2368,
-        max_health: 2500
-      },
-      dota_goodguys_tower3_top: {
-        health: 2500,
-        max_health: 2500
-      },
       dota_goodguys_tower1_mid: {
         health: 277,
         max_health: 1350
@@ -33,11 +25,19 @@
         health: 2500,
         max_health: 2500
       },
-      dota_goodguys_tower4_top: {
+      dota_goodguys_tower4_bot: {
         health: 2600,
         max_health: 2600
       },
-      dota_goodguys_tower4_bot: {
+      dota_goodguys_tower2_top: {
+        health: 2368,
+        max_health: 2500
+      },
+      dota_goodguys_tower3_top: {
+        health: 2500,
+        max_health: 2500
+      },
+      dota_goodguys_tower4_top: {
         health: 2600,
         max_health: 2600
       },

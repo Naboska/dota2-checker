@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:dota2checker/models/game-state-integrator/game_state_integrator.dart';
+import 'package:dota2checker/models/game_state_integrator/game_state_integrator.dart';
 
 import './game_state_integrator_server.dart';
 
 class GSIController extends ChangeNotifier {
-  GameStateIntegrator? _data;
+  GSIModel? _data;
   final _server = GameStateIntegratorServer();
 
   GSIController() {
@@ -20,7 +20,7 @@ class GSIController extends ChangeNotifier {
   get data => _data;
 
   put(Map<String, dynamic> body) {
-    _data = GameStateIntegrator.fromJson(body);
+    _data = GSIModel.fromJson(body);
 
     notifyListeners();
   }

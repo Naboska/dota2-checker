@@ -1,4 +1,4 @@
-import 'package:dota2checker/controllers/game-state-integrator/game_state_integrator.dart';
+import 'package:dota2checker/controllers/game_state_integrator/game_state_integrator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

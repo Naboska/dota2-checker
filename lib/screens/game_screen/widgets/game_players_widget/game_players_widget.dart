@@ -58,30 +58,31 @@ class _GameGamePlayersState extends State<GamePlayersWidget> {
     final bool isDireNotEmpty =
         _lastGame?.dire != null && _lastGame!.dire.isNotEmpty;
 
-    return ScrollConfiguration(behavior: ScrollConfiguration.of(context).copyWith(
-      dragDevices: {
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.touch,
-      },
-    ), child: Flexible(
-        child: Column(children: [
-      SituationWidget(
-          isRender: isRadiantNotEmpty,
-          child: () => GameSideWidget(
-                side: 'The Radiant',
-                sideColor: radiantColor,
-                players: _lastGame?.radiant,
-                isTurbo: isGameTurbo,
-              )),
-      SituationWidget(
-          isRender: isDireNotEmpty,
-          child: () => GameSideWidget(
-                side: 'The Dire',
-                sideColor: direColor,
-                players: _lastGame?.dire,
-                isTurbo: isGameTurbo,
-              ))
-    ],
-          crossAxisAlignment: CrossAxisAlignment.start)));
+    return ScrollConfiguration(
+        behavior: ScrollConfiguration.of(context).copyWith(
+          dragDevices: {
+            PointerDeviceKind.mouse,
+            PointerDeviceKind.touch,
+          },
+        ),
+        child: Flexible(
+            child: Column(children: [
+          SituationWidget(
+              isRender: isRadiantNotEmpty,
+              child: () => GameSideWidget(
+                    side: 'The Radiant',
+                    sideColor: radiantColor,
+                    players: _lastGame?.radiant,
+                    isTurbo: isGameTurbo,
+                  )),
+          SituationWidget(
+              isRender: isDireNotEmpty,
+              child: () => GameSideWidget(
+                    side: 'The Dire',
+                    sideColor: direColor,
+                    players: _lastGame?.dire,
+                    isTurbo: isGameTurbo,
+                  ))
+        ], crossAxisAlignment: CrossAxisAlignment.start)));
   }
 }

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 
-import 'controllers/game-state-integrator/game_state_integrator.dart';
+import 'controllers/game_state_integrator/game_state_integrator.dart';
 import 'screens/home_screen/home_screen.dart';
 import 'screens/player_screen/player_screen.dart';
 import 'utils/dota.dart';
