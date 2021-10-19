@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:dota2checker/models/game_state_integrator/gsi_buildings.dart';
-import 'package:dota2checker/widgets/situation_widget/situation_widget.dart';
+import 'package:dota2checker/utils/between.dart';
 
 class GameMapItemWidget extends StatefulWidget {
   final GSIBuildingHealth building;
@@ -27,9 +27,12 @@ class _GameMapItemState extends State<GameMapItemWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation _animation;
+  late bool _isDenying;
 
   @override
   void initState() {
+    _isDenying = between(widget.building.healthPercent, min: 1, max: 10);
+
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 600));
     _animation = Tween(begin: 1.0, end: 5.0).animate(_animationController)
@@ -69,10 +72,10 @@ class _GameMapItemState extends State<GameMapItemWidget>
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
                           color: Colors.black,
-                          boxShadow: widget.isPulse
+                          boxShadow: widget.isPulse || _isDenying
                               ? <BoxShadow>[
                                   BoxShadow(
-                                      color: Colors.red,
+                                      color: _isDenying ? Colors.orangeAccent : Colors.red,
                                       blurRadius: _animation.value,
                                       spreadRadius: _animation.value)
                                 ]
