@@ -28,25 +28,27 @@ class GSIBuilding {
   late GSIBuildingHealth raxRangeMid;
   late GSIBuildingHealth raxMeleeBot;
   late GSIBuildingHealth raxRangeBot;
+  late GSIBuildingHealth fort;
 
   GSIBuilding.fromJson(Map<String, dynamic> json) {
-    t1Mid = GSIBuildingHealth.fromJson(json['dota_goodguys_tower1_mid']);
-    t2Mid = GSIBuildingHealth.fromJson(json['dota_goodguys_tower2_mid']);
-    t3Mid = GSIBuildingHealth.fromJson(json['dota_goodguys_tower3_mid']);
-    t1Bot = GSIBuildingHealth.fromJson(json['dota_goodguys_tower1_bot']);
-    t2Bot = GSIBuildingHealth.fromJson(json['dota_goodguys_tower2_bot']);
-    t3Bot = GSIBuildingHealth.fromJson(json['dota_goodguys_tower3_bot']);
-    t4Bot = GSIBuildingHealth.fromJson(json['dota_goodguys_tower4_bot']);
-    t1Top = GSIBuildingHealth.fromJson(json['dota_goodguys_tower1_top']);
-    t2Top = GSIBuildingHealth.fromJson(json['dota_goodguys_tower2_top']);
-    t3Top = GSIBuildingHealth.fromJson(json['dota_goodguys_tower3_top']);
-    t4Top = GSIBuildingHealth.fromJson(json['dota_goodguys_tower4_top']);
-    raxMeleeTop = GSIBuildingHealth.fromJson(json['good_rax_melee_top']);
-    raxRangeTop = GSIBuildingHealth.fromJson(json['good_rax_range_top']);
-    raxMeleeMid = GSIBuildingHealth.fromJson(json['good_rax_melee_mid']);
-    raxRangeMid = GSIBuildingHealth.fromJson(json['good_rax_range_mid']);
-    raxMeleeBot = GSIBuildingHealth.fromJson(json['good_rax_melee_bot']);
-    raxRangeBot = GSIBuildingHealth.fromJson(json['good_rax_range_bot']);
+    t1Mid = GSIBuildingHealth.fromJson(json['dota_badguys_tower1_mid'] ?? json['dota_goodguys_tower1_mid']);
+    t2Mid = GSIBuildingHealth.fromJson(json['dota_badguys_tower2_mid'] ?? json['dota_goodguys_tower2_mid']);
+    t3Mid = GSIBuildingHealth.fromJson(json['dota_badguys_tower3_mid'] ?? json['dota_goodguys_tower3_mid']);
+    t1Bot = GSIBuildingHealth.fromJson(json['dota_badguys_tower1_bot'] ?? json['dota_goodguys_tower1_bot']);
+    t2Bot = GSIBuildingHealth.fromJson(json['dota_badguys_tower2_bot'] ?? json['dota_goodguys_tower2_bot']);
+    t3Bot = GSIBuildingHealth.fromJson(json['dota_badguys_tower3_bot'] ?? json['dota_goodguys_tower3_bot']);
+    t4Bot = GSIBuildingHealth.fromJson(json['dota_badguys_tower4_bot'] ?? json['dota_goodguys_tower4_bot']);
+    t1Top = GSIBuildingHealth.fromJson(json['dota_badguys_tower1_top'] ?? json['dota_goodguys_tower1_top']);
+    t2Top = GSIBuildingHealth.fromJson(json['dota_badguys_tower2_top'] ?? json['dota_goodguys_tower2_top']);
+    t3Top = GSIBuildingHealth.fromJson(json['dota_badguys_tower3_top'] ?? json['dota_goodguys_tower3_top']);
+    t4Top = GSIBuildingHealth.fromJson(json['dota_badguys_tower4_top'] ?? json['dota_goodguys_tower4_top']);
+    raxMeleeTop = GSIBuildingHealth.fromJson(json['bad_rax_melee_top'] ?? json['good_rax_melee_top']);
+    raxRangeTop = GSIBuildingHealth.fromJson(json['bad_rax_range_top'] ?? json['good_rax_range_top']);
+    raxMeleeMid = GSIBuildingHealth.fromJson(json['bad_rax_melee_mid'] ?? json['good_rax_melee_mid']);
+    raxRangeMid = GSIBuildingHealth.fromJson(json['bad_rax_range_mid'] ?? json['good_rax_range_mid']);
+    raxMeleeBot = GSIBuildingHealth.fromJson(json['bad_rax_melee_bot'] ?? json['good_rax_melee_bot']);
+    raxRangeBot = GSIBuildingHealth.fromJson(json['bad_rax_range_bot'] ?? json['good_rax_range_bot']);
+    fort = GSIBuildingHealth.fromJson(json['dota_badguys_fort'] ?? json['dota_goodguys_fort']);
   }
 }
 

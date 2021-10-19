@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:dota2checker/models/game_state_integrator/gsi_buildings.dart';
 import 'package:dota2checker/widgets/situation_widget/situation_widget.dart';
-import 'package:flutter/material.dart';
 
 class GameMapItemWidget extends StatefulWidget {
   final GSIBuildingHealth building;
@@ -84,14 +85,12 @@ class _GameMapItemState extends State<GameMapItemWidget>
                                     1, widget.building.healthPercent, 1.0, 0.4)
                                 .toColor())
                       ], mainAxisAlignment: MainAxisAlignment.end))),
-              SituationWidget(
-                  child: () => Text('${widget.building.health}',
-                      style: TextStyle(
-                          fontSize: 11,
-                          color: HSLColor.fromAHSL(
-                                  1, widget.building.healthPercent, 1.0, 0.4)
-                              .toColor())),
-                  isRender: !<double>[0, 100].contains(widget.building.healthPercent))
+              Text('${widget.building.health}',
+                  style: TextStyle(
+                      fontSize: 11,
+                      color: HSLColor.fromAHSL(
+                          1, widget.building.healthPercent, 1.0, 0.4)
+                          .toColor()))
             ]));
   }
 }

@@ -36,21 +36,17 @@ class GamePlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GSIBuilding? prevBuildings;
+    GSIBuildings? prevBuildings;
 
     return GSIConsumer(builder: (context, value, child) {
       final GSIModel? gsi = value.data;
-      final bool isGameStart = gsi != null && (gsi.hero?.id ?? -1) > 0;
+      final bool isGameStart = gsi != null && gsi.player?.activity == 'playing';
 
       return SituationWidget(
           isRender: isGameStart,
           child: () {
-            final String? teamName = gsi?.player?.teamName;
-            final GSIBuilding? buildings = teamName == 'radiant'
-                ? gsi?.buildings?.radiant
-                : gsi?.buildings?.dire;
-
-            Timer.run(() => prevBuildings = buildings);
+            final GSIBuildings? buildings = gsi?.buildings;
+            Timer.run(() => prevBuildings = gsi?.buildings);
 
             return Padding(
                 padding: const EdgeInsets.only(right: 20),
@@ -61,10 +57,16 @@ class GamePlayerWidget extends StatelessWidget {
                       children: [
                         SituationWidget(
                             child: () => GameMapWidget(
-                                buildings: buildings!,
-                                side: teamName!,
-                                prevBuildings: prevBuildings),
-                            isRender: buildings != null),
+                                buildings: buildings!.radiant!,
+                                side: 'radiant',
+                                prevBuildings: prevBuildings?.radiant),
+                            isRender: buildings?.radiant != null),
+                        SituationWidget(
+                            child: () => GameMapWidget(
+                                buildings: buildings!.dire!,
+                                side: 'dire',
+                                prevBuildings: prevBuildings?.dire),
+                            isRender: buildings?.dire != null),
                         // Query(
                         //   options: QueryOptions(
                         //       document: gql(test),

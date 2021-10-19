@@ -30,6 +30,6 @@ class GSIModel {
     provider = GSIProvider.fromJson(json['provider']);
     map = jsonMap != null ? GSIMap.fromJson(jsonMap) : null;
     player = json['player']['steamid'] != null ? GSIPlayer.fromJson(json['player']) : null;
-    hero = jsonHero != null ? GSIHero.fromJson(jsonHero) : null;
+    hero = jsonHero != null && jsonHero['steamid'] != null ? GSIHero.fromJson(jsonHero) : null;
   }
 }
