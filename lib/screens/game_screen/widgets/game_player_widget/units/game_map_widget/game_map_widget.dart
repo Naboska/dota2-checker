@@ -7,21 +7,15 @@ import 'game_map_item_widget.dart';
 
 class GameMapWidget extends StatelessWidget {
   final GSIBuilding buildings;
-  final GSIBuilding? prevBuildings;
   final String side;
 
-  const GameMapWidget(
-      {Key? key, required this.buildings, required this.side, this.prevBuildings})
+  const GameMapWidget({Key? key, required this.buildings, required this.side})
       : super(key: key);
-
-  _checkEqual(GSIBuildingHealth? first, GSIBuildingHealth? last) {
-    if (first == null || last == null) return false;
-
-    return first.healthPercent < last.healthPercent;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final bool isRadiant = side == 'radiant';
+
     return Padding(
         padding: const EdgeInsets.only(bottom: 12),
         child: SizedBox(
@@ -32,135 +26,120 @@ class GameMapWidget extends StatelessWidget {
                   color: Colors.white10,
                   borderRadius: BorderRadius.circular(4)),
               child: Stack(children: <Widget>[
-                Positioned(left: 10,
-                    top: 10,
-                    child: Text(side.toUpperCase(), style: TextStyle(
-                        fontWeight: FontWeight.bold, color: side == 'radiant' ? radiantColor : direColor))),
+                Positioned(
+                    left: 10,
+                    top: !isRadiant ? 10 : null,
+                    bottom: isRadiant ? 10 : null,
+                    child: Text(side.toUpperCase(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: isRadiant ? radiantColor : direColor))),
                 GameMapItemWidget(
-                    building: buildings.t1Top,
-                    left: 27,
-                    vertical: 10,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t1Top, prevBuildings?.t1Top)),
+                  building: buildings.t1Top,
+                  left: 27,
+                  vertical: 10,
+                  side: side,
+                ),
                 GameMapItemWidget(
                     building: buildings.t1Mid,
                     left: 139,
                     vertical: 10,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t1Mid, prevBuildings?.t1Mid)),
+                    side: side),
                 GameMapItemWidget(
                     building: buildings.t1Bot,
                     left: 250,
                     vertical: 10,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t1Bot, prevBuildings?.t1Bot)),
+                    side: side),
                 GameMapItemWidget(
-                    building: buildings.t2Top,
-                    left: 27,
-                    vertical: 65,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t2Top, prevBuildings?.t2Top)),
+                  building: buildings.t2Top,
+                  left: 27,
+                  vertical: 65,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t2Mid,
-                    left: 139,
-                    vertical: 65,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t2Mid, prevBuildings?.t2Mid)),
+                  building: buildings.t2Mid,
+                  left: 139,
+                  vertical: 65,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t2Bot,
-                    left: 250,
-                    vertical: 65,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t2Bot, prevBuildings?.t2Bot)),
+                  building: buildings.t2Bot,
+                  left: 250,
+                  vertical: 65,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t3Top,
-                    left: 27,
-                    vertical: 120,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t3Top, prevBuildings?.t3Top)),
+                  building: buildings.t3Top,
+                  left: 27,
+                  vertical: 120,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t3Mid,
-                    left: 139,
-                    vertical: 120,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t3Mid, prevBuildings?.t3Mid)),
+                  building: buildings.t3Mid,
+                  left: 139,
+                  vertical: 120,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t3Bot,
-                    left: 250,
-                    vertical: 120,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t3Bot, prevBuildings?.t3Bot)),
+                  building: buildings.t3Bot,
+                  left: 250,
+                  vertical: 120,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t4Top,
-                    left: 155,
-                    vertical: 240,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t4Top, prevBuildings?.t4Top)),
+                  building: buildings.t4Top,
+                  left: 155,
+                  vertical: 240,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.t4Bot,
-                    left: 123,
-                    vertical: 240,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.t4Bot, prevBuildings?.t4Bot)),
+                  building: buildings.t4Bot,
+                  left: 123,
+                  vertical: 240,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.raxRangeTop,
-                    left: 13,
-                    vertical: 180,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.raxRangeTop, prevBuildings?.raxRangeTop)),
+                  building: buildings.raxRangeTop,
+                  left: 13,
+                  vertical: 180,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.raxRangeMid,
-                    left: 123,
-                    vertical: 180,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.raxRangeMid, prevBuildings?.raxRangeMid)),
+                  building: buildings.raxRangeMid,
+                  left: 123,
+                  vertical: 180,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.raxRangeBot,
-                    left: 233,
-                    vertical: 180,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.raxRangeBot, prevBuildings?.raxRangeBot)),
+                  building: buildings.raxRangeBot,
+                  left: 233,
+                  vertical: 180,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.raxMeleeTop,
-                    left: 45,
-                    vertical: 180,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.raxMeleeTop, prevBuildings?.raxMeleeTop)),
+                  building: buildings.raxMeleeTop,
+                  left: 45,
+                  vertical: 180,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.raxMeleeMid,
-                    left: 155,
-                    vertical: 180,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.raxMeleeMid, prevBuildings?.raxMeleeMid)),
+                  building: buildings.raxMeleeMid,
+                  left: 155,
+                  vertical: 180,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.raxMeleeBot,
-                    left: 265,
-                    vertical: 180,
-                    side: side,
-                    isPulse: _checkEqual(
-                        buildings.raxMeleeBot, prevBuildings?.raxMeleeBot)),
+                  building: buildings.raxMeleeBot,
+                  left: 265,
+                  vertical: 180,
+                  side: side,
+                ),
                 GameMapItemWidget(
-                    building: buildings.fort,
-                    left: 139,
-                    vertical: 290,
-                    side: side,
-                    isPulse: _checkEqual(buildings.fort, prevBuildings?.fort)),
+                  building: buildings.fort,
+                  left: 139,
+                  vertical: 290,
+                  side: side,
+                ),
               ]),
             )));
   }

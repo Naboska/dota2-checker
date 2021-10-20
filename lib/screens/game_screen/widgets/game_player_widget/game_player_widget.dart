@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dota2checker/utils/is_nil.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dota2checker/models/game_state_integrator/game_state_integrator.dart';
@@ -36,8 +37,6 @@ class GamePlayerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GSIBuildings? prevBuildings;
-
     return GSIConsumer(builder: (context, value, child) {
       final GSIModel? gsi = value.data;
       final bool isGameStart = gsi != null && gsi.player?.activity == 'playing';
@@ -46,7 +45,6 @@ class GamePlayerWidget extends StatelessWidget {
           isRender: isGameStart,
           child: () {
             final GSIBuildings? buildings = gsi?.buildings;
-            Timer.run(() => prevBuildings = gsi?.buildings);
 
             return Padding(
                 padding: const EdgeInsets.only(right: 20),
@@ -58,15 +56,12 @@ class GamePlayerWidget extends StatelessWidget {
                         SituationWidget(
                             child: () => GameMapWidget(
                                 buildings: buildings!.radiant!,
-                                side: 'radiant',
-                                prevBuildings: prevBuildings?.radiant),
-                            isRender: buildings?.radiant != null),
+                                side: 'radiant'),
+                            isRender: !isNil(buildings?.radiant)),
                         SituationWidget(
                             child: () => GameMapWidget(
-                                buildings: buildings!.dire!,
-                                side: 'dire',
-                                prevBuildings: prevBuildings?.dire),
-                            isRender: buildings?.dire != null),
+                                buildings: buildings!.dire!, side: 'dire'),
+                            isRender: !isNil(buildings?.dire)),
                         // Query(
                         //   options: QueryOptions(
                         //       document: gql(test),
