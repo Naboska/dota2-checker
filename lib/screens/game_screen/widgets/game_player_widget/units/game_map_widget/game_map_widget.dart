@@ -139,6 +139,7 @@ class GameMapWidget extends StatelessWidget {
                   left: 139,
                   vertical: 290,
                   side: side,
+                  isDenying: false,
                 ),
               ]),
             )));

@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus_windows
+  libwinmedia
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:libwinmedia/libwinmedia.dart';
 
 import 'package:dota2checker/models/game_state_integrator/gsi_buildings.dart';
 import 'package:dota2checker/utils/between.dart';
+
 
 class GameMapItemWidget extends StatefulWidget {
   final GSIBuildingHealth building;
   final int vertical;
   final int left;
   final String side;
+  final bool isDenying;
 
   const GameMapItemWidget(
       {Key? key,
       required this.left,
       required this.vertical,
       required this.side,
-      required this.building})
+      required this.building, this.isDenying = true})
       : super(key: key);
 
   @override
@@ -22,13 +25,15 @@ class GameMapItemWidget extends StatefulWidget {
 }
 
 class _GameMapItemState extends State<GameMapItemWidget>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver  {
   late GSIBuildingHealth _building;
   late AnimationController _animationController;
   late Animation _animation;
   bool _isDenying = false;
   bool _isAttack = false;
   bool _isHealing = false;
+
+  final _playerDenying = Player(id: 0);
 
   @override
   void initState() {
@@ -44,7 +49,13 @@ class _GameMapItemState extends State<GameMapItemWidget>
 
   @override
   void didUpdateWidget(GameMapItemWidget oldWidget) {
-    _isDenying = between(widget.building.healthPercent, min: 1, max: 10);
+    final isDenying = between(widget.building.healthPercent, min: 1, max: 10);
+
+    if (isDenying && !_isDenying) {
+      _playDenyingAudio();
+    }
+
+    _isDenying = isDenying;
     _isAttack = widget.building.healthPercent < _building.healthPercent;
     _isHealing = widget.building.healthPercent > _building.healthPercent;
     _building = widget.building;
@@ -64,11 +75,16 @@ class _GameMapItemState extends State<GameMapItemWidget>
   void _updateItemListener() => setState(() {});
 
   MaterialColor? _getPulseColor() {
-    if (_isDenying) return Colors.amber;
+    if (widget.isDenying && _isDenying) return Colors.amber;
     if (_isHealing) return Colors.lightGreen;
     if (_isAttack) return Colors.red;
 
     return null;
+  }
+
+  void _playDenyingAudio() async {
+    //_playerDenying.open([Media(uri: join(directory.path, "music/denying.wav"))]);
+    _playerDenying.play();
   }
 
   @override

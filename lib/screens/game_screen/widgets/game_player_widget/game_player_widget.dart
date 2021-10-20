@@ -1,11 +1,10 @@
-import 'dart:async';
-import 'package:dota2checker/utils/is_nil.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 
 import 'package:dota2checker/models/game_state_integrator/game_state_integrator.dart';
 import 'package:dota2checker/widgets/situation_widget/situation_widget.dart';
 import 'package:dota2checker/widgets/gsi_consumer/gsi_consumer.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:dota2checker/utils/is_nil.dart';
 
 import 'units/game_map_widget/game_map_widget.dart';
 import 'units/hero_background_widget.dart';
