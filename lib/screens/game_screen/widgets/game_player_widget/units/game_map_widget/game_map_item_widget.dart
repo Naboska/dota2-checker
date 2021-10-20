@@ -1,3 +1,4 @@
+import 'package:dota2checker/services/dictionary/dictionary_service.dart';
 import 'package:flutter/material.dart';
 import 'package:libwinmedia/libwinmedia.dart';
 
@@ -83,7 +84,7 @@ class _GameMapItemState extends State<GameMapItemWidget>
   }
 
   void _playDenyingAudio() async {
-    //_playerDenying.open([Media(uri: join(directory.path, "music/denying.wav"))]);
+    _playerDenying.open([Media(uri: DictionaryService.createSound('/denying.wav'))]);
     _playerDenying.play();
   }
 
